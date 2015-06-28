@@ -4,13 +4,22 @@
 ## University of Padova
 ## 28 June--7 July 2015
 
-`r 2+2`
-
 ## software requirements
-+ R http://cran.r-project.org/bin/
-+ RStudio http://www.rstudio.com/products/rstudio/download/
-+ knitR
 + LaTeX
++ Jupyter 3.0
+
+## Pseudo-random number generation
+
++ Desirable properties:
+    + uniform
+    + uncorrelated
+    + long period
+    + behave like U(0,1) random variables
++ Marsaglia's DIEHARD tests http://en.wikipedia.org/wiki/Diehard_tests
++ Requirements for Statistics weaker than for cryptography
++ Mersenne Twister is adequate for most statistical purposes
++ Linear congruential are not. Notably, Wichmann-Hill
++ Setting seed explicitly helps make analysis reproducible
 
 ## Introduction to R
 
