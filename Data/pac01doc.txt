@@ -1,0 +1,567 @@
+DOCUMENTATION FOR PAC01.DAT                   August 1/04
+
+David A. Freedman, Statistics Department, UC Berkeley
+
+INTRODUCTION
+
+    PAC01.DAT contains data for 13,803 persons in the March
+2001 Current Population Survey, age 16 and over, resident in the
+Pacific Division of United States. (The "Pacific Division"
+comprises the states of Alaska, California, Hawaii, Oregon, and
+Washington.) Variables include sex, race, ethnicity, personal and
+family incomes, marital status, and employment status.  Persons
+are in households and (occasionally) group quarters.  
+
+SOURCE OF THE DATA
+
+    The source of the data is the March 2001 Current Population  
+Survey, conducted by the Bureau of the Census for the Bureau of
+Labor Statistics. Data are transcribed from public-use microdata 
+supplied by the Bureau of the Census on CD-ROM. In several 
+instances, variables were recoded, for ease of use. We are 
+responsible for any errors of transcription or interpretation. 
+Experience suggests some minor level of error in the original
+data, in transcription, and in recoding. For information on 
+the design of the survey, see Freedman-Pisani-Purves (1998, 
+chapter 23).
+
+    PAC01.DAT is an ANSI file with one record per
+person.  Each record has 27 variables.  Each variable is
+represented by a string of fixed length, consisting of some
+blank spaces followed by some numbers.  For example, an
+income of $41,344 is represented as 41344, with three
+initial blank spaces.  Some incomes are negative, in which
+case the left-most digit is preceded by a minus sign (-).
+Income and employment variables generally apply to 2000; 
+demographic variables, to 2001.
+
+    The variables in each record are separated by one space, 
+and each record terminates with a carriage-return/line feed. This
+makes it easy to manipulate the data with a WINDOWS text editor; 
+if you want to work on the file in UNIX, try the dos2unix utility, 
+which changes the record terminator to a line feed:
+
+               dos2unix pac01.dat pac01w.dat
+
+TextPad in WINDOWS handles either format; NotePad and WordPad
+have problems. MATLAB handles either format. The length of each
+record is 97 characters, including the spaces but not the 
+carriage-return/line feed that ends the record. The record layout 
+is documented in the table below.  To use the file in R, it will 
+help to add a header row with variable names, supplied below. (You 
+want all the names on one long line at the top of the file.)
+
+age sex race ethnicity marital numkids fampers edlevel labstat 
+classwork fullpart hours whynotwork inschool industry occupation
+pincome incfam citizen immigyr hhseqnum fseqnum perscode spoucode
+finalwgt marchwgt state
+
+
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+AGE            Codes: 0-89  Age in years
+P1-2                    90  90 years of age or older
+VARIABLE 1
+
+
+SEX            Codes: 1  Male
+P4                    2  Female
+VARIABLE 2
+
+
+RACE           Codes: 1  White
+P6                    2  Black
+VARIABLE 3            3  Amer Indian or Aleut Eskimo
+                      4  Asian or Pacific Islander
+
+
+ETHNICITY      Ethnicity of person (Hispanic origin)
+P8
+VARIABLE 4     Codes: 0  Not available
+                      1  Mexican American
+                      2  Chicano
+                      3  Mexican (Mexicano)
+                      4  Puerto Rican
+                      5  Cuban
+                      6  Central or South American
+                      7  Other Spanish
+                      8  All other
+                      9  Don't know
+                     10  NA (?) 
+
+
+MARITAL        Marital status.
+P10
+VARIABLE 5     Codes: 1  Married, civilian spouse present
+                      2  Married, armed forces spouse present
+                      3  Married, spouse absent (not sep.)
+                      4  Widowed
+                      5  Divorced
+                      6  Separated
+                      7  Never Married
+
+               Note:  AGE<15 implies MARSTAT = 7
+
+
+NUMKIDS        Number of own, unmarried children under the
+P12            age of 18.
+VARIABLE 6     Codes: 0-8  Number of children
+                        9  9 or more children
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+FAMPERS        Number of persons in family.  For primary
+P14-15         families, this includes all persons in related
+VARIABLE 7     subfamilies and related individuals living with
+               the primary family.  For an unrelated individual,
+               or non-family householder, FAMPERS=1.  Codes: 1-39.
+               
+
+EDLEVEL        Educational level of person.
+P17-18
+VARIABLE 8     Codes:  0  Children (age less than 15)
+                      31  Less than 1st grade
+                      32  1st, 2nd, 3rd, or 4th grade
+                      33  5th or 6th grade
+                      34  7th or 8th grade
+                      35  9th grade
+                      36  10th grade
+                      37  11th grade
+                      38  12th grade, no diploma
+                      39  High school graduate, high school
+                          diploma or equivalent
+                      40  Some college but no degree
+                      41  Associate degree in college--
+                          occupation/vocation program
+                      42  Associate degree in college--
+                          academic program
+                      43  Bachelor's degree (e.g., BS, BA, AB)
+                      44  Master's degree (e.g., MS, MA, MBA)
+                      45  Professional school degree
+                          (e.g., MD, DDS, DVM, LLB, JD)
+                      46  Doctoral degree (e.g., PhD, EdD)
+
+
+LABSTAT        Labor force status. (Recoded.)
+P20
+VARIABLE 9     Codes: 0  Children (under 15)
+                      1  Employed, at work
+                      2  Employed, not at work
+                      3  Unemployed, on layoff
+                      4  Unemployed, looking for work
+                      5  Not in labor force, retired
+                      6  Not in labor force, disabled
+                      7  Not in labor force, other
+                      8  Armed Forces 
+
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+CLASSWORK      Current or most recent job was ...
+P22
+VARIABLE 10    Codes: 0  Children, Armed Forces,
+                         Not in labor force
+
+                      1  Private sector
+                      2  Federal government
+                      3  State government
+                      4  Local government
+                      5  Self-employed--incorporated
+                      6  Self-employed--unincorporated
+                      7  Without pay
+                      8  Unemployed, no previous experience
+
+
+FULLPART       Full/Part-time worker status.
+P24-25
+VARIABLE 11    Codes: 0  Children, Armed Forces
+                      1  Not in labor force
+                      2  FT, usually FT
+                      3  FT, usually PT for economic reasons
+                      4  FT, usually PT for non-economic reasons
+                      5  PT for economic reasons, usually FT
+                      6  PT for non-economic reasons, usually FT
+                      7  PT, usually PT for economic reasons
+                      8  PT, usually PT for non-economic reasons
+                      9  Not at work, usually FT
+                     10  Not at work, usually PT
+                     11  Unemployed, wants FT hours
+                     12  Unemployed, wants PT hours
+
+               Note:  FT is full-time (35+ hours/week),
+                      PT is part-time. Recoded.
+                      Recoded.
+
+HOURS          Hours worked last week at all jobs
+P27-28
+VARIABLE 12    Codes: 0-99
+
+               Note: code 0 unless LABSTAT = 1
+
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+WHYNOTWORK     What was the main reason ... didn't work in 2000?
+P30
+VARIABLE 13    Codes: 0  Children, Armed forces, Working,
+                         Other not in universe
+                      1  Ill or disabled
+                      2  Retired
+                      3  Taking care of home or family
+                      4  Going to school
+                      5  Could not find work
+                      6  Other
+
+               
+INSCHOOL       Was ... in school last week? (Recoded.)
+P32
+VARIABLE 14    Codes: 0  Under 16, over 24, Armed forces
+                      1  Not in school
+                      2  High school, part time
+                      3  High school, full time
+                      4  College, part time
+                      5  College, full time
+
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+INDUSTRY       Current or most recent job was ...
+P34-35
+VARIABLE 15    Codes: 0  Children, Armed Forces,
+                         Not in labor force
+
+                      1  Agriculture
+                      2  Mining
+                      3  Construction
+
+                      Manufacturing
+
+                      4  Manufacturing--durable goods
+                      5  Manufacturing--nondurable goods
+
+                      Transportation, communications, and
+                      other public utilities
+
+                      6  Transportation
+                      7  Communications
+                      8  Utilities and sanitary services
+
+                      Wholesale and retail trade
+
+                      9  Wholesale trade
+                      10 Retail trade
+                      11 Finance, insurance, and real estate
+
+                      Services
+
+                      12 Private household
+                      13 Business and repair
+                      14 Personal services, except household
+                      15 Entertainment
+                      16 Hospital
+                      17 Medical, except hospital
+                      18 Educational
+                      19 Social services
+                      20 Other professional services
+
+                      Other
+
+                      21 Forestry and fisheries
+                      22 Public administration
+                      23 Unemployed, last job was Armed Forces
+                      24 Unemployed, no previous experience
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+OCCUPATION     Current or most recent job was ....
+P37-38
+VARIABLE 16    Codes: 0  Children, Armed Forces,
+                         Not in labor force
+
+                      Managerial and professional
+
+                      1  Executive, administrative, and
+                         managerial
+                      2  Professional specialty
+
+                      Technical, sales, and administrative
+                      support
+
+                      3  Technicians and related support
+                      4  Sales
+                      5  Administrative support, including
+                         clerical
+
+                      Service
+
+                      6  Private household
+                      7  Protective service
+                      8  Other service
+
+                      Operators, fabricators, and laborers
+
+                      9  Precision production, craft, and
+                         repair
+                      10 Machine operators, assemblers, and
+                         inspectors
+                      11 Transportation and material moving
+                      12 Handlers, equipment cleaners, etc.
+
+                      Other
+
+                      13 Farming, forestry, and fishing
+                      14 Unemployed, last job was Armed forces
+                      15 Unemployed, no previous experience
+
+
+
+INDUSTRY vs. OCCUPATION.  If you work for a corporation,
+OCCUPATION is what you do and INDUSTRY is what the company
+does.  For instance, a college professor has OCCUPATION = 2
+and INDUSTRY = 18.  The college arborist, who takes care of
+the campus trees, has OCCUPATION = 13 and INDUSTRY = 18.
+OCCUPATION code 24 and INDUSTRY 15 are recoded.
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+PINCOME        Personal income in 2000.
+P40-47
+VARIABLE 17    Codes: Dollar amount of income.  Sum of items
+               truncated to various ranges ("top-coding").
+
+
+INCFAM         Family income in 2000.  
+P49-56
+VARIABLE 18    Codes: Dollar amount of income.  Sum of
+               incomes of family members.  For primary families,
+               includes incomes of related subfamily members and
+               individuals.  (In some cases, "related subfamily 
+               members" includes in-laws.) Components are
+               top-coded.
+
+
+CITIZEN        Citizenship status.
+P58
+VARIABLE 19    Codes: 1 Native, born in the US
+                      2 Native, born in Puerto Rico
+                        or outlying areas
+                      3 Native, born abroad of American parent(s)
+                      4 Foreign born, naturalized
+                      5 Foreign born, not a citizen
+
+
+IMMIGYR        When did ... come to the US to stay?
+P60-61
+VARIABLE 20    Codes: 0 Native born in the US
+                      1 Before 1950
+                      2 1950-59
+                      3 1960-64
+                      4 1965-69
+                      5 1970-74
+                      6 1975-79
+                      7 1980-81
+                      8 1982-83
+                      9 1984-85
+                     10 1986-87
+                     11 1988-89
+                     12 1990-91
+                     13 1992-93
+                     14 1994-95
+                     15 1996-97
+                     16 1998-2001
+
+               Note:  Code 0 corresponds to code 1
+               on CITIZEN.  Codes 2, 3, etc. on CITIZEN 
+               have IMMIGYR > 0.
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+
+HHSEQNUM       Household sequence number.  A unique identifier
+P63-67         for each household.
+VARIABLE 21
+
+
+FSEQNUM        Family sequence number within a household.
+P69-70
+VARIABLE 22    Codes:  1-39.  Family sequence number.
+
+
+
+PERSCODE       Person's sequence number in household.
+P72-73
+VARIABLE 23    Codes: 1-39  Person's sequence number in
+                            household
+
+
+SPOUCODE       Code for spouse's sequence number in household.
+P75-76
+VARIABLE 24    Codes:    0  No spouse
+                      1-39  Spouse's sequence number in
+                            household
+
+
+FINALWGT       Final sampling weight.  Inverse of sampling
+P78-85         fraction adjusted for non-response and over
+VARIABLE 25    or under sampling of particular groups.
+               FINALWGT=0 is possible, as hispanics were added
+               for the March items; so were members of the
+               Armed Forces living in households.
+
+
+MARCHWGT       March supplemental weight for INCOME,
+P87-94         WHYNOTWORK, NUMKIDS, etc.
+VARIABLE 26
+
+
+    THERE ARE TWO IMPLIED DECIMAL PLACES IN THE WEIGHTS.
+                 REMEMBER TO DIVIDE BY 100.
+
+
+
+------------------------------------------------------------
+Name and
+Position       Variable Description        File:  pac01.dat
+-------------------------------------------------------------
+
+STATE          State of residence, grouped by 4 regions
+P96-97         and 9 divisions. (This file only has states
+VARIABLE 27    in the Pacific Division.)
+
+               NORTHEAST REGION (REGION 1)
+
+               New England Division (Division 1)
+
+               Codes: 11  Maine
+                      12  New Hampshire
+                      13  Vermont
+                      14  Massachusetts
+                      15  Rhode Island
+                      16  Connecticut
+
+               Middle Atlantic Division (Division 2)
+
+               Codes: 21  New York
+                      22  New Jersey
+                      23  Pennsylvania
+
+
+               MIDWEST REGION (REGION 2)
+
+               East North Central Division (Division 3)
+
+               Codes: 31  Ohio
+                      32  Indiana
+                      33  Illinois
+                      34  Michigan
+                      35  Wisconsin
+
+               West North Central Division (Division 4)
+
+               Codes: 41  Minnesota
+                      42  Iowa
+                      43  Missouri
+                      44  North Dakota
+                      45  South Dakota
+                      46  Nebraska
+                      47  Kansas
+
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description       File:  pac01.dat
+-------------------------------------------------------------
+
+STATE          State of residence, grouped by 4 regions
+P96-97         and 9 divisions (continued).
+VARIABLE 27
+               SOUTH REGION (REGION 3)
+
+               South Atlantic Division (Division 5)
+
+               Codes: 51  Delaware
+                      52  Maryland
+                      53  District of Columbia
+                      54  Virginia
+                      55  West Virginia
+                      56  North Carolina
+                      57  South Carolina
+                      58  Georgia
+                      59  Florida
+
+               East South Central Division (Division 6)
+
+               Codes: 61  Kentucky
+                      62  Tennessee
+                      63  Alabama
+                      64  Mississippi
+
+               West South Central Division (Division 7)
+
+               Codes: 71  Arkansas
+                      72  Louisiana
+                      73  Oklahoma
+                      74  Texas
+
+
+               WEST REGION (REGION 4)
+
+               Mountain Division (Division 8)
+
+               Codes: 81  Montana
+                      82  Idaho
+                      83  Wyoming
+                      84  Colorado
+                      85  New Mexico
+                      86  Arizona
+                      87  Utah
+                      88  Nevada
+
+-------------------------------------------------------------
+Name and
+Position       Variable Description       File:  pac01.dat
+-------------------------------------------------------------
+
+STATE          State of residence, grouped by 4 regions
+P96-97         and 9 divisions (continued).
+VARIABLE 27
+
+               Pacific Division (Division 9)
+
+               Codes: 91  Washington
+                      92  Oregon
+                      93  California
+                      94  Alaska
+                      95  Hawaii
